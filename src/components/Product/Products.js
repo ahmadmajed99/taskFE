@@ -61,27 +61,30 @@ const Products = () => {
 
   const paginatedData = sortedData.slice(startIndex, endIndex);
 
-  return data.length > 0 ? (
+  return (
     <div style={{ marginTop: "2rem" }}>
       <SortingControl sortBy={sortBy} onSortChange={handleSortChange} />
       <AddProduct fetchProduct={fetchProduct} />
-      <Grid container spacing={4}>
-        {paginatedData?.map((item, index) => (
-          <Grid item xs={4} key={index}>
-            <Paper className={classes.paper}>
-              <Typography variant="h5">{item.name}</Typography>
-              <Typography variant="subtitle1">{item.date}</Typography>
-              <EditProduct
-                fetchProduct={fetchProduct}
-                id={item.id}
-                productToEdit={item}
-              />
-              <DeleteProduct fetchProduct={fetchProduct} id={item.id} />
-            </Paper>
-          </Grid>
-        ))}
-      </Grid>
-
+      {data.length > 0 ? (
+        <Grid container spacing={4}>
+          {paginatedData?.map((item, index) => (
+            <Grid item xs={4} key={index}>
+              <Paper className={classes.paper}>
+                <Typography variant="h5">{item.name}</Typography>
+                <Typography variant="subtitle1">{item.date}</Typography>
+                <EditProduct
+                  fetchProduct={fetchProduct}
+                  id={item.id}
+                  productToEdit={item}
+                />
+                <DeleteProduct fetchProduct={fetchProduct} id={item.id} />
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <p>No data provided</p>
+      )}
       <div className={classes.paginationContainer}>
         <Pagination
           count={Math.ceil(data.length / itemsPerPage)}
@@ -91,8 +94,6 @@ const Products = () => {
         />
       </div>
     </div>
-  ) : (
-    <p>Not Data Found</p>
   );
 };
 
